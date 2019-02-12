@@ -1,68 +1,117 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Express Server Starter
 
-## Available Scripts
+This starter project is meant to work with the React front end [here](https://github.com/Product-College-Labs/react-express-project). 
 
-In the project directory, you can run:
+The purpose of this project is to provide a backend for a React Frontend. 
 
-### `npm start`
+This project provides a simple backend API that serves JSON on a couple routes. 
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting started
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+You'll need to install dependencies. 
 
-### `npm test`
+- `npm install` 
+- Run the project with node or ndoemon
+- `node server.js` or `nodemon server.js`
+- port current set to 4000
+- Results viewable at `http://localhost:4000/`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## API Documentation 
 
-### `npm run build`
+The API of the current project has two endpoints that return JSON. 
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `/about` 
+	- returns - `{ about: 'description string' }`
+	- Example - `/about`
+- `/random` 
+	- query - n: Int
+	- returns - random number from 0 to n - 1
+	- Example - `/random/?n=6` 
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+You should test the API for yourself to make sure everything is running. Follow the instructions above and launch the Express Server.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+There are three end points and each returns JSON. Type these into the address bar of the browser or just click the links below: 
 
-### `npm run eject`
+- [http://localhost:4000](http://localhost:4000) default route
+- [http://localhost:4000/about](http://localhost:4000/about) returns the about text
+- [http://localhost:4000/random/?n=6](http://localhost:4000/random/?n=6) returns random number between 0 and 5
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Notice each of these endpoints returns JSON. The browser should display this. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The last endpoint in the list above includes query params. Try changing the value here and check the results. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [http://localhost:4000/random/?n=6](http://localhost:4000/random/?n=20) Random number between 0 and 19
+- [http://localhost:4000/random/?n=6](http://localhost:4000/random/?n=100) Random number between 0 and 99
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Test some other values. Try some unexpected or values that you think would return unexpected results. 
 
-## Learn More
+## Challenges (3hrs)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Your goal is to add some features to this API. Currently the code stores some functions in `utils.js`. These are imported into `server.js` with: 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`const { random, randomD, randomRolls } = require('./utils')`
 
-### Code Splitting
+You can find this at the top of `server.js`. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+All of these functions are stubbed in currently. Your job is to fill these functions out and build their functionality and test them along the way. 
 
-### Analyzing the Bundle Size
+Run the tests to check your work. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+`npm test`
 
-### Making a Progressive Web App
+**Challenge 1** 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Currently the API endpoint '/random/?n=num' returns a random number from 0 to num. This has a problem since the numbers returned are decimal numbers, for example: `13.409162476456668`. Modify the code at the endpoint to return whole numbers. 
 
-### Advanced Configuration
+- The random function should return a **whole number**. 
+- The number should range from 0 to n - 1
+- Carefully craft an intuitive API
+	- The API should read well and be self documenting
+	- The JSON returned should be intuitive unambiguous
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+**Challenge 2** 
 
-### Deployment
+You need a function to simulate die rolls. Currently there is a stubbed function `randomD(n)`. This function takes a number n as a parameter. It should return a number from 1 to n. 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+- `randomD(n)` should return a whole number 
+- `randomD(n)` the range should be from 1 to n
+- Define an API that returns the results as JSON
+	- Your API should be intuitive and self documenting
+	- The JSON returned should be intuitive
 
-### `npm run build` fails to minify
+**Challenge 3** 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+We need to a function to generate a series of die rolls. This function is stubbed in as `randomRolls(n, s)`, `n` is number of dice to roll, and `s` is number of sides possessed by each die. This function should return an array of random numbers. 
+
+- `randomRolls(n, s)` should return an array
+	- all elements should whole numbers
+	- Each element should be value of 1 to `s`
+
+**Challenge 4** 
+
+You need to modify the API to work with the new functions. Currently You can use the `/random/?n=6` to get a random between 0 and 5. Your job is to add an option that returns a die roll. This should be a number from 1 to n. For excample: 
+
+- `/random/?die=6` should return a number from 1 to 6
+
+**Challenge 5** 
+
+You need to expand your API to return a number of die rolls. This new call should return an array of random numbers
+
+- `/random/?num=3&die=6` should return an array of 3 numbers from 1 to 6
+
+##Challenge 6** 
+
+Modify the API to work with path rather than the query string. For example: 
+
+- `/random/6` returns a value from 0 to 5
+- `/random/die/6` returns value from 1 to 6
+- `/random/dice/3/6` returns an array of 3 die rolls from 1 to 6
+
+**Stretch Challenges** 
+
+Try any of these you want with any extra time you have. 
+
+- Return a random quote
+  - Create an endpoint that returns a random quote
+  
+
