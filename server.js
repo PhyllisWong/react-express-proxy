@@ -34,15 +34,17 @@ app.get('/random', (req, res) => {
   res.json({ value, message: `Random number between 0 and ${n}, upperbound exclusive.` })
 })
 
-app.get('/roll-dice', (req, res) => {
-  const { n } = req.query
-  const diceValue = randomD(n);
-  res.json({ diceValue, message: `Random ${n} sided dice roll` })
+app.post('/roll-dice/:range', (req, res) => {
+  const { range } = req.params
+  // const { range } = req.query
+  const diceValue = randomD(range);
+  res.json({ diceValue, message: `Random ${range} sided dice roll` })
 })
 
 app.get('/roll-many-dice', (req, res) => {
   const { die, sides } = req.query
   const data = randomRolls(die, sides)
+
   let diceRolls = null
   let total = null
   if (data) {
@@ -57,7 +59,7 @@ app.get('/roll-many-dice', (req, res) => {
   })
 })
 
-app.post('/api/world', (req, res) => {
+app.post('/api/dice', (req, res) => {
   console.log(req.body);
   res.send(
     `I received your POST request. This is what you sent me: ${req.body.post}`,

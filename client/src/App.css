@@ -24,6 +24,10 @@
   color: #61dafb;
 }
 
+/* .sides-input {
+  min-width: 300px;
+} */
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
