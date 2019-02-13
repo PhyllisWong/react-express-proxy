@@ -19,10 +19,8 @@ app.get('/', (req, res) => {
 })
 
 // A simple route that returns a JSON object
-// Test this route with:
 app.get('/about', (req, res) => {
-  // This Object is converted to JSON and returned.
-  res.json({ about: 'this service generates a random numbers.' })
+  res.json({ about: 'this service generates random numbers' })
 })
 
 // Random number route
@@ -41,20 +39,22 @@ app.post('/roll-dice/:range', (req, res) => {
   res.json({ diceValue, message: `Random ${range} sided dice roll` })
 })
 
-app.get('/roll-many-dice', (req, res) => {
-  const { die, sides } = req.query
+app.get('/roll-many-dice/:die/:sides', (req, res) => {
+  const { die, sides } = req.params
   const data = randomRolls(die, sides)
 
-  let diceRolls = null
+  let dice = null
   let total = null
   if (data) {
-    diceRolls = data[0]
+    dice = data[0]
     total = data[1]
   }
 
   res.json({
     message: `You rolled ${die}, D${sides}`,
-    diceRolls,
+    dice,
+    die: Number(die),
+    sides: Number(sides),
     total,
   })
 })

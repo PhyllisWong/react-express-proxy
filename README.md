@@ -1,20 +1,43 @@
-# React Express Server Starter
+# React Express Fullstack Web Aplication
+This is a fullstack React web application that gives the user several options for rolling dice. 
 
-This starter project is meant to work with the React front end [here](https://github.com/Product-College-Labs/react-express-project). 
+The purpose of this project is to provide an Express Backend for a React Frontend. 
 
-The purpose of this project is to provide a backend for a React Frontend. 
-
-This project provides a simple backend API that serves JSON on a couple routes. 
 
 ## Getting started
 
-You'll need to install dependencies. 
+You'll need to install dependencies. From the root directory of the project type in the command line.
 
-- `npm install` 
-- Run the project with node or ndoemon
-- `node server.js` or `nodemon server.js`
-- port current set to 4000
-- Results viewable at `http://localhost:4000/`
+```
+yarn install
+``` 
+
+Then navigate to the React client directory.
+
+```
+cd client
+yarn install
+```
+
+
+
+To run the server only with node or nodemon
+```
+node server.js
+``` 
+or 
+```
+nodemon server.js
+```
+port is currently set to 4000
+Results viewable at `http://localhost:4000/`
+
+
+To start both the React app and the server run this command from the root directory of the project
+
+```
+yarn dev
+```
 
 ## API Documentation 
 
@@ -31,6 +54,8 @@ The API of the current project has two endpoints that return JSON.
 You should test the API for yourself to make sure everything is running. Follow the instructions above and launch the Express Server.
 
 There are three end points and each returns JSON. Type these into the address bar of the browser or just click the links below: 
+
+The Node server runs via proxy
 
 - [http://localhost:4000](http://localhost:4000) default route
 - [http://localhost:4000/about](http://localhost:4000/about) returns the about text

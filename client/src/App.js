@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
+import DiceRoller from './components/dice-roller'
+import DiceRollResults from './components/dice-roll-result'
 
 class App extends Component {
-  state = {
-    response: '',
-    post: '',
-    responseToPost: '',
-  };
+  constructor(props) {
+    super(props)
+    this.state ={
+      responseToRollRequest: '',
+    }
+   }
 
   componentDidMount() {
     this.callApi()
@@ -21,42 +24,29 @@ class App extends Component {
     return body;
   };
 
-  handleSubmit = async e => {
-    e.preventDefault();
-    const url = `/roll-dice/${this.state.post}` // /roll-many-dice/7
-    // const url = `/roll-many-dice?range=${this.state.post}` // 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ post: this.state.post }),
-    });
+  handleRollManyDice = async (numberOfDice, numberOfSides) => {
+    // ROUTE /roll-many-dice/:dice/:sides
+    const url = `/roll-many-dice/${numberOfDice}/${numberOfSides}`
+    // fetch is a get request by default
+    const response = await fetch(url)
+
     const body = await response.json();
-    this.setState({ responseToPost: body });
-    console.log('response to post: ', this.state.responseToPost.diceValue)
+    this.setState({ responseToRollRequest: body }); // This is asynchronous
+    // console.log('response to post: ', this.state.responseToRollRequest)
   };
 
   render() {
       return (
         <div className="App">
-          <p>{this.state.response}</p>
-          <form onSubmit={this.handleSubmit}>
-            <p>
-              <strong>Dice roller</strong>
-            </p>
-            <p>How many sided die do you want to roll?</p>
-            <input
-              type='number'
-              placeholder='enter number'
-              value={this.state.post}
-              className='sides-input'
-              onChange={e => this.setState({ post: e.target.value })}
-            />
-            <button type="submit">Submit</button>
-          </form>
-          
-          <h2>{this.state.responseToPost.diceValue}</h2>
+          <h1>Dice Roller</h1>
+          <p>welcome to the dice roller</p>
+          <p>Choose your dice set by inputing the number of dice to roll
+            and the number of sides the dice have
+          </p>
+          <DiceRoller handleRollDice={ this.handleRollManyDice }/>
+          <DiceRollResults 
+            { ...this.state.responseToRollRequest }
+          />
         </div>
       );
     }
